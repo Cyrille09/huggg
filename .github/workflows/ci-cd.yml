@@ -24,9 +24,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      #   - name: Run Linter
-      #     run: npm run lint
-
       - name: Run Tests
         run: npm test
 
@@ -55,19 +52,21 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
 
-  deploy:
-    needs: docker-build-and-push # Run this job only after the docker-build-and-push job succeeds
-    runs-on: ubuntu-latest
+# The deployment section need to be configure with cloud service credential
 
-    # steps:
-    #   - name: Deploy to Server via SSH # Deploy the application (example using SSH)
-    #     uses: appleboy/ssh-action@v0.1.10
-    #     with:
-    #       host: ${{ secrets.SSH_HOST }}
-    #       username: ${{ secrets.SSH_USER }}
-    #       key: ${{ secrets.SSH_PRIVATE_KEY }}
-    #       script: |
-    #         docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
-    #         docker stop my-app || true
-    #         docker rm my-app || true
-    #         docker run -d --name my-app -p 3000:3000 --env-file .env ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+#   deploy:
+#     needs: docker-build-and-push # Run this job only after the docker-build-and-push job succeeds
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Deploy to Server via SSH # Deploy the application (example using SSH)
+#         uses: appleboy/ssh-action@v0.1.10
+#         with:
+#           host: ${{ secrets.SSH_HOST }}
+#           username: ${{ secrets.SSH_USER }}
+#           key: ${{ secrets.SSH_PRIVATE_KEY }}
+#           script: |
+#             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+#             docker stop my-app || true
+#             docker rm my-app || true
+#             docker run -d --name my-app -p 3000:3000 --env-file .env ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest

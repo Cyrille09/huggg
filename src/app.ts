@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import cors from "cors";
 import brandRouter from "./routes/brandRouter";
 import setupLogger from "./logger/logger";
@@ -12,15 +12,9 @@ const PORT = process.env.PORT;
 const app = express();
 const { loggerMiddleware } = setupLogger();
 
-// Global error handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Internal Server Error" });
-});
-
 // Security Middleware
 app.use(helmet()); // Secure HTTP headers
-app.use(cors()); // Enable CORS
+app.use(cors());
 
 // Rate Limiting
 const limiter = rateLimit({
